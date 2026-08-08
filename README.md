@@ -1,5 +1,7 @@
 # omp-photon-escalate
 
+[![Plugin Demo](https://img.youtube.com/vi/U_tZUz47l20/maxresdefault.jpg)](https://youtu.be/U_tZUz47l20)
+
 An [Oh My Pi](https://omp.sh/) extension that escalates unanswered `ask` tool
 dialogs to iMessage through Photon's `spectrum-ts` SDK.
 
