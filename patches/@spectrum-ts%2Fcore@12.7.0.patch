@@ -1,0 +1,13 @@
+diff --git a/dist/index.js b/dist/index.js
+index 4d1cf16f1ffeb6d791146de5dfcccd5a48b7f2ab..fa89294ba630d743c76a589d978968d099dd6b4a 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -1,6 +1,7 @@
+ import { $ as drainStreamText, A as reaction, B as removeMember, D as read, F as poll, H as asMarkdown, I as addMember, J as resolveContents, K as group, L as addMemberSchema, P as option, Q as StreamConsumedError, R as leaveSpace, S as reply, T as renameSchema, U as markdown, V as removeMemberSchema, X as text, Y as asText, a as createTokenRenewal, at as toVCard, b as richlink, c as senderAttrs, d as classifyIdentifier, dt as attachment, et as asCustom, f as envAwareConfig, g as voice, h as asVoice, i as stream, it as fromVCard, l as markdownToPlainText, mt as tracedFetch, n as createAsyncQueue, nt as asContact, o as contentAttrs, ot as avatar, p as envFor, pt as fetchUrlBytes, r as mergeStreams, rt as contact, s as errorAttrs, st as avatarSchema, t as broadcast, tt as custom, ut as asAttachment, v as unsend, w as rename, z as leaveSpaceSchema } from "./stream-t0CbOOUT.js";
+ import z from "zod";
+-import ogs from "open-graph-scraper";
++import { createRequire } from "node:module";
++const ogs = createRequire(import.meta.url)("open-graph-scraper");
+ import { createLogger, setLogLevel, setupOtel, withSpan } from "@photon-ai/otel";
+ import { createHmac, timingSafeEqual } from "node:crypto";
+ import { RawInboundEvent } from "@photon-ai/proto/photon/fusor/v1/inbound";

@@ -1,0 +1,33 @@
+{
+    "name": "omp-photon-escalate",
+    "version": "0.1.0",
+    "private": true,
+    "type": "module",
+    "omp": {
+        "extensions": [
+            "./src/main.ts"
+        ]
+    },
+    "dependencies": {
+        "spectrum-ts": "^12.7.0"
+    },
+    "devDependencies": {
+        "@oh-my-pi/pi-coding-agent": "^17.2.11",
+        "husky": "^9.1.7",
+        "lint-staged": "^17.3.0",
+        "oxfmt": "^0.62.0",
+        "oxlint": "^1.77.0",
+        "typescript": "^5.9.0"
+    },
+    "patchedDependencies": {
+        "@spectrum-ts/core@12.7.0": "patches/@spectrum-ts%2Fcore@12.7.0.patch",
+        "@spectrum-ts/imessage@12.7.0": "patches/@spectrum-ts%2Fimessage@12.7.0.patch"
+    },
+    "scripts": {
+        "format": "oxfmt --write .",
+        "format:check": "oxfmt --check .",
+        "lint": "oxlint . --no-error-on-unmatched-pattern",
+        "lint:fix": "oxlint --fix . --no-error-on-unmatched-pattern",
+        "prepare": "bunx --bun husky"
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "enabled": true,
+    "escalateAfterSeconds": 120,
+    "nudgeIntervalSeconds": 1800,
+    "stickyAwayMode": true,
+    "phone": "+15551234567",
+    "line": "+15559876543",
+    "projectId": "",
+    "projectSecret": "",
+    "labelPrefix": "omp"
+}
