@@ -3,6 +3,7 @@ import type { AskToolInput, ExtensionContext, QuestionResult } from "@oh-my-pi/p
 import type { ContentBuilder } from "spectrum-ts";
 import type { EscalateConfig } from "./config";
 import { getPhotonSession, type PhotonSession } from "./photon";
+import { loadSpectrum } from "./spectrum-runtime";
 
 const BASE32 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
 const SUBMIT_CHOICES = ["Submit", "Start over"] as const;
@@ -261,8 +262,8 @@ export async function runPhoneFlow(
     await sleep(delayMs, ctx, signal);
     const session = await getPhotonSession(cfg);
     throwIfAborted(signal);
-    // Poll builders stay lazy so an unavailable SDK cannot break extension loading.
-    const { poll } = await import("spectrum-ts");
+    // Keep the SDK optional at extension-load time.
+    const { poll } = loadSpectrum();
     throwIfAborted(signal);
     ctx.ui.setStatus("photon-escalate", "iMessage: waiting for answer");
     try {

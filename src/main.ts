@@ -3,7 +3,6 @@ import { loadConfig } from "./config";
 import { clearActivePhonePoll, notifyTerminalAnswer, runPhoneFlow } from "./escalate";
 import { ASK_DESCRIPTION, buildAskSchema, buildResult } from "./native-ask";
 import { setPhotonLogger, stopPhotonSession } from "./photon";
-import { installSpectrumRuntimePatches } from "./spectrum-patches";
 
 let awayMode = false;
 let configWarningShown = false;
@@ -29,7 +28,6 @@ function errorMessage(error: unknown): string {
 }
 
 export default function photonEscalate(pi: ExtensionAPI): void {
-    installSpectrumRuntimePatches();
     setPhotonLogger(pi.logger);
     pi.setLabel("Photon Ask Escalation");
     pi.logger.debug("photon-escalate: registering ask override", { entry: "src/main.ts" });

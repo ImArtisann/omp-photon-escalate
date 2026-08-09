@@ -2,6 +2,7 @@ import type { ExtensionAPI } from "@oh-my-pi/pi-coding-agent";
 import type { ContentInput, SpectrumInstance } from "spectrum-ts";
 import type { IMessageMessage } from "spectrum-ts/providers/imessage";
 import type { EscalateConfig } from "./config";
+import { loadIMessage, loadSpectrum } from "./spectrum-runtime";
 
 type InboundHandler = (message: IMessageMessage) => boolean;
 type App = SpectrumInstance;
@@ -208,9 +209,10 @@ class Session implements PhotonSession {
 }
 
 async function connect(cfg: EscalateConfig): Promise<Session> {
-    // Keep the SDK optional at extension-load time; failed installs must preserve native ask.
-    const { Spectrum } = await import("spectrum-ts");
-    const { imessage } = await import("spectrum-ts/providers/imessage");
+    // Resolve through Bun's CommonJS loader: Spectrum's ESM facade imports a
+    // CommonJS-only scraper entry that older OMP runtimes reject at link time.
+    const { Spectrum } = loadSpectrum();
+    const { imessage } = loadIMessage();
     const app = await Spectrum({
         projectId: cfg.projectId!,
         projectSecret: cfg.projectSecret!,
