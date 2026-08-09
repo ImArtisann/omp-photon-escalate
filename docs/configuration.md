@@ -115,7 +115,7 @@ Install the plugin and configuration independently because OMP profiles isolate
 plugin registries and agent state:
 
 ```bash
-OMP_PROFILE=planning omp install . --scope=user
+OMP_PROFILE=planning omp install github:ImArtisann/omp-photon-escalate --scope=user
 install -m 600 \
   ~/.omp/agent/photon-escalate.json \
   ~/.omp/profiles/planning/agent/photon-escalate.json

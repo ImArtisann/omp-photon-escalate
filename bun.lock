@@ -5,7 +5,7 @@
     "": {
       "name": "omp-photon-escalate",
       "dependencies": {
-        "spectrum-ts": "^12.7.0",
+        "spectrum-ts": "12.7.0",
       },
       "devDependencies": {
         "@oh-my-pi/pi-coding-agent": "^17.2.11",
@@ -16,10 +16,6 @@
         "typescript": "^5.9.0",
       },
     },
-  },
-  "patchedDependencies": {
-    "@spectrum-ts/core@12.7.0": "patches/@spectrum-ts%2Fcore@12.7.0.patch",
-    "@spectrum-ts/imessage@12.7.0": "patches/@spectrum-ts%2Fimessage@12.7.0.patch",
   },
   "packages": {
     "@babel/helper-string-parser": ["@babel/helper-string-parser@7.29.7", "", {}, "sha512-Pb5ijPrZ89GDH8223L4UP8i6QApWxs04RbPQJTeWDV0/keR2E36MeKnyr6LYmUUvqRRI+Iv87SuF1W6ErINzYw=="],

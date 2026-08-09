@@ -32,31 +32,45 @@ Phone numbers must use E.164 format, for example `+15551234567`.
 
 ## Install
 
-Install dependencies and register the package for the default OMP profile:
+Install directly from GitHub for the default OMP profile:
 
 ```bash
-bun install
-omp install . --scope=user
+omp install github:ImArtisann/omp-photon-escalate --scope=user
+omp config set ask.timeout 0
 ```
 
-OMP installs the package under `~/.omp/plugins/node_modules/omp-photon-escalate`
-and records it in `~/.omp/plugins/omp-plugins.lock.json`.
-
-Create the default-profile configuration:
-
-```bash
-install -m 600 photon-escalate.example.json ~/.omp/agent/photon-escalate.json
-```
-
-Edit the installed configuration with the destination and Photon credentials.
-See [Configuration](docs/configuration.md) for every setting and credential
-options.
-
-Verify installation:
+Confirm that OMP enabled the plugin:
 
 ```bash
 omp plugin list --json
 ```
+
+## Configure
+
+Create the default-profile configuration:
+
+```bash
+mkdir -p ~/.omp/agent
+cat > ~/.omp/agent/photon-escalate.json <<'JSON'
+{
+    "enabled": true,
+    "escalateAfterSeconds": 120,
+    "nudgeIntervalSeconds": 1800,
+    "stickyAwayMode": true,
+    "phone": "+15551234567",
+    "projectId": "your-photon-project-id",
+    "projectSecret": "your-photon-project-secret",
+    "labelPrefix": "omp"
+}
+JSON
+chmod 600 ~/.omp/agent/photon-escalate.json
+```
+
+Replace `phone` with the allowed destination in E.164 format and replace the
+Photon credentials. Add `line` when the Photon project exposes more than one
+outbound iMessage line. See [Configuration](docs/configuration.md) for every
+setting, environment-based credentials, project overrides, and named-profile
+paths.
 
 ## Named profiles
 
@@ -64,7 +78,7 @@ OMP profiles isolate plugins, settings, sessions, and configuration. Install the
 extension separately for each profile that needs it:
 
 ```bash
-OMP_PROFILE=planning omp install . --scope=user
+OMP_PROFILE=planning omp install github:ImArtisann/omp-photon-escalate --scope=user
 install -m 600 \
   ~/.omp/agent/photon-escalate.json \
   ~/.omp/profiles/planning/agent/photon-escalate.json
@@ -111,8 +125,8 @@ bunx tsc --noEmit
 The extension factory is `src/main.ts`, declared by `omp.extensions` in
 `package.json`.
 
-The package includes Bun patches for Spectrum runtime compatibility.
-`bun install` reapplies them from `patches/`.
+Spectrum compatibility fixes are applied by the extension's Bun loader, so a
+GitHub install does not depend on repository-relative Bun patch files.
 
 ## Security
 
