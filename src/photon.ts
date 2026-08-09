@@ -59,6 +59,17 @@ function parsePollChoice(
     }
     return index >= 0 && index < choiceCount ? { index, selected: content.selected } : undefined;
 }
+function parseTextChoice(
+    text: string,
+    tagPrefix: string,
+    choiceCount: number,
+): { index: number; selected: true } | undefined {
+    const [receivedTag, rawChoice, ...extra] = text.trim().split(/\s+/);
+    if (receivedTag !== tagPrefix || extra.length !== 0 || !rawChoice) return undefined;
+    if (!/^\d+$/.test(rawChoice)) return undefined;
+    const index = Number(rawChoice) - 1;
+    return index >= 0 && index < choiceCount ? { index, selected: true } : undefined;
+}
 
 function createAbortError(message: string): Error {
     const error = new Error(message);
@@ -70,6 +81,7 @@ class Session implements PhotonSession {
     readonly #handlers = new Set<InboundHandler>();
     readonly #pollBacklog: IMessageMessage[] = [];
     readonly #pollInterests = new Map<string, PollInterest>();
+    readonly #seenInboundIds = new Set<string>();
     readonly #app: App;
     readonly #space: { id: string };
 
@@ -115,11 +127,9 @@ class Session implements PhotonSession {
                 return true;
             }
             if (message.content.type !== "text") return false;
-            const body = message.content.text.trim();
-            if (!/^\d+$/.test(body)) return false;
-            const index = Number(body) - 1;
-            if (index < 0 || index >= choiceCount) return false;
-            resolve({ index, selected: true });
+            const textChoice = parseTextChoice(message.content.text, tagPrefix, choiceCount);
+            if (!textChoice) return false;
+            resolve(textChoice);
             return true;
         };
 
@@ -178,6 +188,12 @@ class Session implements PhotonSession {
                 const message = rawMessage as unknown as IMessageMessage;
                 if (message.direction === "outbound" || messageSpace.id !== this.#space.id)
                     continue;
+                if (this.#seenInboundIds.has(message.id)) continue;
+                if (this.#seenInboundIds.size === 512) {
+                    const oldest = this.#seenInboundIds.values().next().value;
+                    if (oldest) this.#seenInboundIds.delete(oldest);
+                }
+                this.#seenInboundIds.add(message.id);
                 let handled = false;
                 for (const handler of this.#handlers) {
                     if (!handler(message)) continue;

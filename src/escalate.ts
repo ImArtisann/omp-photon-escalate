@@ -75,6 +75,7 @@ function answerText(result: QuestionResult): string {
 
 function buildQuestionText(
     question: AskToolInput["questions"][number],
+    tag: string,
     index: number,
     count: number,
 ): string {
@@ -88,7 +89,7 @@ function buildQuestionText(
             ? `\nRecommended: ${recommended + 1}`
             : "";
     const header = question.header ? `[${question.header}]\n` : "";
-    return `${header}[${index + 1}/${count}] ${question.question}\n\n${lines.join("\n")}\n${recommendation}\nReply with a number, or pick "Other…" to type your own.`;
+    return `${header}[${index + 1}/${count}] ${question.question}\n\n${lines.join("\n")}\n${recommendation}\nReply "${tag} <number>", or pick "Other…" to type your own.`;
 }
 interface ArmedWait<T> {
     pending: Promise<T>;
@@ -168,7 +169,7 @@ async function answerQuestion(
     const choices = [...optionChoices, "Other…", ...(question.multi ? ["✓ Done"] : [])];
 
     throwIfAborted(signal);
-    await session.send(buildQuestionText(question, index, count));
+    await session.send(buildQuestionText(question, tag, index, count));
     throwIfAborted(signal);
     const firstChoice = armWait(signal, (childSignal) =>
         session.waitForChoice(tag, choices.length, childSignal, choices),
@@ -295,10 +296,12 @@ export async function runPhoneFlow(
                         `${index + 1}. ${result.question}\n   Answer: ${answerText(result)}`,
                 )
                 .join("\n\n");
-            throwIfAborted(signal);
-            await session.send(`Review your answers:\n\n${summary}`);
-            throwIfAborted(signal);
             const submitTag = `${cfg.labelPrefix}-${askId}.S`;
+            throwIfAborted(signal);
+            await session.send(
+                `Review your answers:\n\n${summary}\n\nReply "${submitTag} 1" to submit or "${submitTag} 2" to start over.`,
+            );
+            throwIfAborted(signal);
             const firstSubmitChoice = armWait(signal, (childSignal) =>
                 session.waitForChoice(
                     submitTag,
