@@ -125,8 +125,8 @@ bunx tsc --noEmit
 The extension factory is `src/main.ts`, declared by `omp.extensions` in
 `package.json`.
 
-Spectrum compatibility fixes are applied by the extension's Bun loader, so a
-GitHub install does not depend on repository-relative Bun patch files.
+Spectrum is loaded lazily through Bun's CommonJS-compatible `createRequire`
+path, so GitHub installs do not depend on repository-relative Bun patch files.
 
 ## Security
 
