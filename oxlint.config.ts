@@ -4,6 +4,7 @@ export default defineConfig({
     ignorePatterns: [
         "node_modules/**",
         "dist/**",
+        "vendor/spectrum-runtime/**",
         "lib/**",
         ".tmp/**",
         ".turbo/**",

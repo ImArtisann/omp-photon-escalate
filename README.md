@@ -125,8 +125,8 @@ bunx tsc --noEmit
 The extension factory is `src/main.ts`, declared by `omp.extensions` in
 `package.json`.
 
-Spectrum stays on asynchronous ESM imports. Its runtime loader rewrites
-Spectrum's incompatible Open Graph Scraper import before module evaluation.
+Spectrum stays on asynchronous ESM imports. The package ships a prebuilt
+Spectrum runtime whose Open Graph Scraper import is CommonJS-compatible.
 
 ## Security
 
