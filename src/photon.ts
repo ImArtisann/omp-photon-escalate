@@ -209,10 +209,8 @@ class Session implements PhotonSession {
 }
 
 async function connect(cfg: EscalateConfig): Promise<Session> {
-    // Resolve through Bun's CommonJS loader: Spectrum's ESM facade imports a
-    // CommonJS-only scraper entry that older OMP runtimes reject at link time.
-    const { Spectrum } = loadSpectrum();
-    const { imessage } = loadIMessage();
+    // This import is intentionally lazy: an SDK load failure must preserve native ask.
+    const [{ Spectrum }, { imessage }] = await Promise.all([loadSpectrum(), loadIMessage()]);
     const app = await Spectrum({
         projectId: cfg.projectId!,
         projectSecret: cfg.projectSecret!,

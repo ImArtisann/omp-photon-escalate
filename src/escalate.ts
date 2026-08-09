@@ -262,8 +262,8 @@ export async function runPhoneFlow(
     await sleep(delayMs, ctx, signal);
     const session = await getPhotonSession(cfg);
     throwIfAborted(signal);
-    // Keep the SDK optional at extension-load time.
-    const { poll } = loadSpectrum();
+    // This import is intentionally lazy: an SDK load failure must preserve native ask.
+    const { poll } = await loadSpectrum();
     throwIfAborted(signal);
     ctx.ui.setStatus("photon-escalate", "iMessage: waiting for answer");
     try {
