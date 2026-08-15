@@ -12,7 +12,7 @@
         "spectrum-ts": "12.7.0"
     },
     "devDependencies": {
-        "@oh-my-pi/pi-coding-agent": "^17.2.11",
+        "@oh-my-pi/pi-coding-agent": "^17.2.15",
         "husky": "^9.1.7",
         "lint-staged": "^17.3.0",
         "oxfmt": "^0.62.0",
