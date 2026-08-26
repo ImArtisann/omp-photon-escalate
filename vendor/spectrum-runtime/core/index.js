@@ -1,7 +1,7 @@
 import { $ as drainStreamText, A as reaction, B as removeMember, D as read, F as poll, H as asMarkdown, I as addMember, J as resolveContents, K as group, L as addMemberSchema, P as option, Q as StreamConsumedError, R as leaveSpace, S as reply, T as renameSchema, U as markdown, V as removeMemberSchema, X as text, Y as asText, a as createTokenRenewal, at as toVCard, b as richlink, c as senderAttrs, d as classifyIdentifier, dt as attachment, et as asCustom, f as envAwareConfig, g as voice, h as asVoice, i as stream, it as fromVCard, l as markdownToPlainText, mt as tracedFetch, n as createAsyncQueue, nt as asContact, o as contentAttrs, ot as avatar, p as envFor, pt as fetchUrlBytes, r as mergeStreams, rt as contact, s as errorAttrs, st as avatarSchema, t as broadcast, tt as custom, ut as asAttachment, v as unsend, w as rename, z as leaveSpaceSchema } from "./stream-t0CbOOUT.js";
 import z from "zod";
 import { createRequire } from "node:module";
-const ogs = createRequire(import.meta.url)("open-graph-scraper");
+const requireFromCore = createRequire(import.meta.url);
 import { createLogger, setLogLevel, setupOtel, withSpan } from "@photon-ai/otel";
 import { createHmac, timingSafeEqual } from "node:crypto";
 import { RawInboundEvent } from "@photon-ai/proto/photon/fusor/v1/inbound";
@@ -22,6 +22,7 @@ const cleanString = (v) => {
 };
 const fetchLinkMetadata = async (url) => {
 	try {
+		const ogs = requireFromCore("open-graph-scraper");
 		const result = await ogs({
 			url,
 			timeout: DEFAULT_TIMEOUT_MS,
