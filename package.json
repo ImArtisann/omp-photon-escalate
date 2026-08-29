@@ -13,7 +13,7 @@
         "cheerio": "1.2.0",
         "nice-grpc": "^2.1.17",
         "nice-grpc-common": "^2.0.4",
-        "open-graph-scraper": "6.11.0",
+        "open-graph-scraper": "6.12.0",
         "spectrum-ts": "12.7.0"
     },
     "devDependencies": {
