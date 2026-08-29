@@ -20,7 +20,7 @@
         "@oh-my-pi/pi-coding-agent": "^17.3.7",
         "husky": "^9.1.7",
         "lint-staged": "^17.3.0",
-        "oxfmt": "^0.64.0",
+        "oxfmt": "^0.65.0",
         "oxlint": "^1.79.0",
         "typescript": "^5.9.0"
     },
